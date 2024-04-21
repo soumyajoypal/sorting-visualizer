@@ -75,6 +75,7 @@ nav button:hover {
     align-items: flex-end;
     justify-content: center;
     margin-block: 2rem;
+    /* gap: 1px; */
     padding: 1rem 1rem;
     width: 80%;
     max-width: 100%;
@@ -85,8 +86,8 @@ nav button:hover {
     background-color: yellow;
     width: 2%;
     height: 350px;
+    border: 1px solid rgba(0, 0, 0, 0.332);
     transition: color 0.2s ease-in-out;
-    border: 1px solid rgba(0, 0, 0, 0.397);
 }
 
 input[type="range"] {
@@ -150,6 +151,7 @@ input[type="range"]::-ms-thumb {
 
     .display-area {
         width: 100%;
+        gap: 0.04rem;
     }
 
     .sort-buttons {

@@ -1,5 +1,6 @@
 import { getMergeSortAnimations } from "./mergeSort.js";
 import { getQuickSortAnimations } from "./quickSort.js";
+
 // Global Variables
 const displayArea = document.querySelector(".display-area");
 let array = [];
@@ -18,9 +19,9 @@ let toggle = false;
 let sortingInProgress = false;
 
 // Input Ranges
-
 sizeInput.addEventListener("change", (e) => {
   size = e.target.value;
+  sortingInProgress = false;
   pushElements();
 });
 speedInput.addEventListener("change", (e) => {
@@ -29,6 +30,7 @@ speedInput.addEventListener("change", (e) => {
 
 // event listener to the generate button
 generateBtn.addEventListener("click", () => {
+  sortingInProgress = false;
   pushElements();
 });
 
@@ -38,7 +40,6 @@ function randomInteger() {
 }
 
 function pushElements() {
-  if (sortingInProgress) return;
   toggle = false;
   let newArray = [];
   let n = size;
@@ -77,11 +78,14 @@ function getBarArray() {
   return document.querySelectorAll(".bar");
 }
 
-async function bubbleSort() {
+async function bubbleSortAlgorithm() {
   sortingInProgress = true;
   const arr = getBarArray();
   const n = arr.length;
   for (let i = 0; i < n - 1; i++) {
+    if (!sortingInProgress) {
+      break;
+    }
     for (let j = 0; j < n - i - 1; j++) {
       const el1 = arr[j];
       const el2 = arr[j + 1];
@@ -90,6 +94,9 @@ async function bubbleSort() {
       el1.style.background = "red";
       el2.style.background = "red";
       await new Promise((resolve) => setTimeout(resolve, speed));
+      if (!sortingInProgress) {
+        break;
+      }
       if (val1 > val2) {
         swapElements(el1, el2);
       }
@@ -108,6 +115,9 @@ async function selectionSort() {
   const arr = getBarArray();
   const n = arr.length;
   for (let i = 0; i < n - 1; i++) {
+    if (!sortingInProgress) {
+      break;
+    }
     let min = i;
     for (let j = i + 1; j < n; j++) {
       let el2 = arr[j];
@@ -116,6 +126,9 @@ async function selectionSort() {
       let el1 = arr[min];
       let val1 = parseInt(el1.dataset.barValue);
       await new Promise((resolve) => setTimeout(resolve, speed));
+      if (!sortingInProgress) {
+        break;
+      }
       if (val2 < val1) {
         min = j;
       }
@@ -127,6 +140,9 @@ async function selectionSort() {
       el1.style.background = "red";
       el2.style.background = "red";
       await new Promise((resolve) => setTimeout(resolve, speed));
+      if (!sortingInProgress) {
+        break;
+      }
       swapElements(el1, el2);
       el1.style.background = "yellow";
       el2.style.background = "yellow";
@@ -157,17 +173,26 @@ async function insertionSort() {
   let n = arr.length;
 
   for (let i = 1; i < n; i++) {
+    if (!sortingInProgress) {
+      break;
+    }
     let j = i - 1;
     let el = arr[i];
     let val = parseInt(el.dataset.barValue);
     el.style.background = "blue";
     await new Promise((resolve) => setTimeout(resolve, speed));
+    if (!sortingInProgress) {
+      break;
+    }
     while (j >= 0 && parseInt(arr[j].dataset.barValue) > val) {
       arr[j + 1].style.background = "red";
       arr[j].style.background = "red";
       arr[j + 1].style.height = parseInt(arr[j].dataset.barValue) + "px";
       arr[j + 1].dataset.barValue = parseInt(arr[j].dataset.barValue);
       await new Promise((resolve) => setTimeout(resolve, speed));
+      if (!sortingInProgress) {
+        break;
+      }
       arr[j + 1].style.background = "yellow";
       arr[j].style.background = "yellow";
       j--;
@@ -176,6 +201,9 @@ async function insertionSort() {
     arr[j + 1].dataset.barValue = val;
     arr[j + 1].style.background = "green";
     await new Promise((resolve) => setTimeout(resolve, speed));
+    if (!sortingInProgress) {
+      break;
+    }
     arr[j + 1].style.background = "yellow";
     arr[i].style.background = "yellow";
   }
@@ -191,6 +219,9 @@ async function mergeSort() {
   });
   let animations = getMergeSortAnimations(heightArray);
   for (let i = 0; i < animations.length; i++) {
+    if (!sortingInProgress) {
+      break;
+    }
     let visualBars = document.getElementsByClassName("bar");
     const animation = animations[i];
     const isColorChange = i % 3 !== 2;
@@ -198,6 +229,9 @@ async function mergeSort() {
       const [barIndx1, barIndx2] = animation;
       const color = i % 3 === 0 ? "red" : "yellow";
       await new Promise((resolve) => setTimeout(resolve, speed));
+      if (!sortingInProgress) {
+        break;
+      }
       visualBars[barIndx1].style.background = color;
       visualBars[barIndx2].style.background = color;
     } else {
@@ -218,6 +252,9 @@ async function quickSort() {
   });
   let animations = getQuickSortAnimations(heightArray);
   for (let i = 0; i < animations.length; i++) {
+    if (!sortingInProgress) {
+      break;
+    }
     let visualBars = document.getElementsByClassName("bar");
     const [barIndx1, barIndx2] = animations[i];
     let bar1 = visualBars[barIndx1];
@@ -225,6 +262,9 @@ async function quickSort() {
     bar1.style.background = "red";
     bar2.style.background = "red";
     await new Promise((resolve) => setTimeout(resolve, speed));
+    if (!sortingInProgress) {
+      break;
+    }
     swapElements(bar1, bar2);
     bar1.style.background = "yellow";
     bar2.style.background = "yellow";
@@ -238,7 +278,7 @@ pushElements();
 bubbleSortBtn.addEventListener("click", () => {
   if (!toggle) {
     bubbleSortBtn.classList.add("active");
-    bubbleSort();
+    bubbleSortAlgorithm();
     toggle = true;
   }
 });
