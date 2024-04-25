@@ -1,6 +1,6 @@
 import { getMergeSortAnimations } from "./mergeSort.js";
 import { getQuickSortAnimations } from "./quickSort.js";
-
+import { getHeapSortAnimations } from "./heapSort.js";
 // Global Variables
 const displayArea = document.querySelector(".display-area");
 let array = [];
@@ -10,8 +10,11 @@ const selectionSortBtn = document.querySelector(".selection-sort-btn");
 const insertionSortBtn = document.querySelector(".insertion-sort-btn");
 const mergeSortBtn = document.querySelector(".merge-sort-btn");
 const quickSortBtn = document.querySelector(".quick-sort-btn");
+const heapSortBtn = document.querySelector(".heap-sort-btn");
 const sizeInput = document.getElementById("size-input");
 const speedInput = document.getElementById("speed-input");
+const openModalBtn = document.querySelector(".open-modal-btn");
+const closeModalBtn = document.querySelector(".close-modal-btn");
 
 let size = 40;
 let speed = 40;
@@ -91,8 +94,8 @@ async function bubbleSortAlgorithm() {
       const el2 = arr[j + 1];
       const val1 = parseInt(el1.dataset.barValue);
       const val2 = parseInt(el2.dataset.barValue);
-      el1.style.background = "red";
-      el2.style.background = "red";
+      el1.style.background = "var(--red)";
+      el2.style.background = "var(--red)";
       await new Promise((resolve) => setTimeout(resolve, speed));
       if (!sortingInProgress) {
         break;
@@ -100,12 +103,12 @@ async function bubbleSortAlgorithm() {
       if (val1 > val2) {
         swapElements(el1, el2);
       }
-      el1.style.background = "yellow";
-      el2.style.background = "yellow";
+      el1.style.background = "var(--white)";
+      el2.style.background = "var(--white)";
     }
-    arr[n - i - 1].style.background = "green";
+    arr[n - i - 1].style.background = "var(--green)";
   }
-  arr[0].style.background = "green";
+  arr[0].style.background = "var(--green)";
   sortingInProgress = false;
   bubbleSortBtn.classList.remove("active");
 }
@@ -122,7 +125,7 @@ async function selectionSort() {
     for (let j = i + 1; j < n; j++) {
       let el2 = arr[j];
       let val2 = parseInt(el2.dataset.barValue);
-      el2.style.background = "blue";
+      el2.style.background = "var(--blue)";
       let el1 = arr[min];
       let val1 = parseInt(el1.dataset.barValue);
       await new Promise((resolve) => setTimeout(resolve, speed));
@@ -132,24 +135,24 @@ async function selectionSort() {
       if (val2 < val1) {
         min = j;
       }
-      el2.style.background = "yellow";
+      el2.style.background = "var(--white)";
     }
     if (min !== i) {
       let el2 = arr[min];
       let el1 = arr[i];
-      el1.style.background = "red";
-      el2.style.background = "red";
+      el1.style.background = "var(--red)";
+      el2.style.background = "var(--red)";
       await new Promise((resolve) => setTimeout(resolve, speed));
       if (!sortingInProgress) {
         break;
       }
       swapElements(el1, el2);
-      el1.style.background = "yellow";
-      el2.style.background = "yellow";
+      el1.style.background = "var(--white)";
+      el2.style.background = "var(--white)";
     }
-    arr[i].style.background = "green";
+    arr[i].style.background = "var(--green)";
   }
-  arr[n - 1].style.background = "green";
+  arr[n - 1].style.background = "var(--green)";
   sortingInProgress = false;
   selectionSortBtn.classList.remove("active");
 }
@@ -157,7 +160,7 @@ async function selectionSort() {
 async function colorGreen(arr) {
   if (toggle === true) {
     for (const bar of arr) {
-      bar.style.background = "green";
+      bar.style.background = "var(--green)";
       if (arr.length < 200) {
         await new Promise((resolve) => setTimeout(resolve, 10));
       } else {
@@ -179,33 +182,33 @@ async function insertionSort() {
     let j = i - 1;
     let el = arr[i];
     let val = parseInt(el.dataset.barValue);
-    el.style.background = "blue";
+    el.style.background = "var(--blue)";
     await new Promise((resolve) => setTimeout(resolve, speed));
     if (!sortingInProgress) {
       break;
     }
     while (j >= 0 && parseInt(arr[j].dataset.barValue) > val) {
-      arr[j + 1].style.background = "red";
-      arr[j].style.background = "red";
+      arr[j + 1].style.background = "var(--red)";
+      arr[j].style.background = "var(--red)";
       arr[j + 1].style.height = parseInt(arr[j].dataset.barValue) + "px";
       arr[j + 1].dataset.barValue = parseInt(arr[j].dataset.barValue);
       await new Promise((resolve) => setTimeout(resolve, speed));
       if (!sortingInProgress) {
         break;
       }
-      arr[j + 1].style.background = "yellow";
-      arr[j].style.background = "yellow";
+      arr[j + 1].style.background = "var(--white)";
+      arr[j].style.background = "var(--white)";
       j--;
     }
     arr[j + 1].style.height = val + "px";
     arr[j + 1].dataset.barValue = val;
-    arr[j + 1].style.background = "green";
+    arr[j + 1].style.background = "var(--green)";
     await new Promise((resolve) => setTimeout(resolve, speed));
     if (!sortingInProgress) {
       break;
     }
-    arr[j + 1].style.background = "yellow";
-    arr[i].style.background = "yellow";
+    arr[j + 1].style.background = "var(--white)";
+    arr[i].style.background = "var(--white)";
   }
   colorGreen(arr);
   sortingInProgress = false;
@@ -227,7 +230,7 @@ async function mergeSort() {
     const isColorChange = i % 3 !== 2;
     if (isColorChange) {
       const [barIndx1, barIndx2] = animation;
-      const color = i % 3 === 0 ? "red" : "yellow";
+      const color = i % 3 === 0 ? "var(--red)" : "var(--white)";
       await new Promise((resolve) => setTimeout(resolve, speed));
       if (!sortingInProgress) {
         break;
@@ -259,19 +262,50 @@ async function quickSort() {
     const [barIndx1, barIndx2] = animations[i];
     let bar1 = visualBars[barIndx1];
     let bar2 = visualBars[barIndx2];
-    bar1.style.background = "red";
-    bar2.style.background = "red";
+    bar1.style.background = "var(--red)";
+    bar2.style.background = "var(--red)";
     await new Promise((resolve) => setTimeout(resolve, speed));
     if (!sortingInProgress) {
       break;
     }
     swapElements(bar1, bar2);
-    bar1.style.background = "yellow";
-    bar2.style.background = "yellow";
+    bar1.style.background = "var(--white)";
+    bar2.style.background = "var(--white)";
   }
   colorGreen(document.getElementsByClassName("bar"));
   sortingInProgress = false;
   quickSortBtn.classList.remove("active");
+}
+async function heapSort() {
+  sortingInProgress = true;
+  let heightArray = Array.from(getBarArray()).map((item) => {
+    return parseInt(item.dataset.barValue);
+  });
+  let animations = getHeapSortAnimations(heightArray);
+  for (let i = 0; i < animations.length; i++) {
+    if (!sortingInProgress) {
+      break;
+    }
+    let visualBars = document.getElementsByClassName("bar");
+    const [barIndx1, barIndx2] = animations[i];
+    let bar1 = visualBars[barIndx1];
+    let bar2 = visualBars[barIndx2];
+    bar1.style.background = "var(--blue)";
+    bar2.style.background = "var(--blue)";
+    await new Promise((resolve) => setTimeout(resolve, speed));
+    if (!sortingInProgress) {
+      break;
+    }
+    bar2.style.background = "var(--red)";
+    bar2.style.background = "var(--red)";
+    await new Promise((resolve) => setTimeout(resolve, speed * 2));
+    swapElements(bar1, bar2);
+    bar1.style.background = "var(--white)";
+    bar2.style.background = "var(--white)";
+  }
+  colorGreen(document.getElementsByClassName("bar"));
+  sortingInProgress = false;
+  heapSortBtn.classList.remove("active");
 }
 
 pushElements();
@@ -310,4 +344,19 @@ quickSortBtn.addEventListener("click", () => {
     toggle = true;
     quickSort();
   }
+});
+heapSortBtn.addEventListener("click", () => {
+  if (!toggle) {
+    heapSortBtn.classList.add("active");
+    toggle = true;
+    heapSort();
+  }
+});
+openModalBtn.addEventListener("click", () => {
+  document.querySelector(".info").style.display = "grid";
+  document.querySelector(".overlay").style.display = "block";
+});
+closeModalBtn.addEventListener("click", () => {
+  document.querySelector(".info").style.display = "none";
+  document.querySelector(".overlay").style.display = "none";
 });
