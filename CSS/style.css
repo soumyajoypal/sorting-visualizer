@@ -125,6 +125,7 @@ main {
     border-radius: 10px;
     padding: 0.5rem 1rem;
     display: none;
+    max-width: 800px;
 }
 
 .overlay {
@@ -175,7 +176,7 @@ main {
 }
 
 .info div p {
-    font-size: 0.75rem;
+    font-size: 0.64rem;
     color: var(--dark-blue);
     margin-inline: auto;
     line-height: 1.4;
@@ -245,7 +246,7 @@ input[type="range"]::-ms-thumb {
     cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 500px) {
     nav button {
         padding: 0.4rem 0.4rem;
         font-size: 0.25rem;
@@ -270,6 +271,7 @@ input[type="range"]::-ms-thumb {
         width: 100%;
         padding: 0 0.5rem;
         gap: 0.04rem;
+        margin-bottom: 0.1rem;
     }
 
     .bar {
@@ -283,5 +285,98 @@ input[type="range"]::-ms-thumb {
         gap: 0.2rem;
         justify-content: center;
         align-items: center;
+    }
+
+    .info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0.5rem 1rem;
+        display: none;
+        border-radius: 0;
+        border: none;
+    }
+
+
+    .info-header i {
+        position: absolute;
+        right: 0;
+        top: 0px;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .info-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 0.2rem;
+        padding: 0.5rem;
+        background-color: rgba(247, 239, 225, 0.756);
+        border-radius: 10px;
+    }
+
+    .info div h2 {
+        font-size: 1rem;
+    }
+
+    .info div p {
+        font-size: 0.35rem;
+    }
+}
+
+@media screen and (min-width:500px)and (max-width: 1020px) {
+    .info {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        width: 80%;
+        height: 60%;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0.5rem 1rem;
+        display: none;
+    }
+
+    .info-header {
+        grid-column: span 3;
+    }
+
+    .info-header i {
+        position: absolute;
+        right: 0;
+        top: 0px;
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .info-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 0.2rem;
+        padding: 0.5rem;
+        background-color: rgba(247, 239, 225, 0.756);
+        border-radius: 10px;
+    }
+
+    .info div h2 {
+        font-size: 1rem;
+    }
+
+    .info div p {
+        font-size: 0.35rem;
     }
 }
